@@ -39,8 +39,8 @@ Hasil training terakhir menunjukkan:
 
 ## Inferensi
 Model diuji terhadap 1 gambar acak dari dataset test.  
-Contoh hasil prediksi:
-![image](https://github.com/user-attachments/assets/9259ace6-3810-4fe2-99a4-7628769f11fc)
+Contoh hasil prediksi:\n
+![image](https://github.com/user-attachments/assets/9259ace6-3810-4fe2-99a4-7628769f11fc)\n
   `Predicted class: dandelion`
 
 ## Dependensi
