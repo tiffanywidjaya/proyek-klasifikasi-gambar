@@ -27,8 +27,10 @@ Callback:
 
 ## Target Akurasi
 Hasil training terakhir menunjukkan:
-- **Training Accuracy:** 81.38%
-- **Validation Accuracy:** 71.84%
+- **Training Accuracy:** 84.57%
+- **Training Loss:** 0.4174
+- **Validation Accuracy:** 78.16%
+- **Validation Loss:** 0.6361
 
 ## Format Model yang Disimpan
 | Format | Lokasi | Keterangan |
