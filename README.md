@@ -1,50 +1,61 @@
-# Proyek Klasifikasi Gambar: Bunga 
+# 🧠 Proyek Klasifikasi Gambar: Sampah
 
-## Deskripsi Proyek
-Proyek ini bertujuan untuk membangun model klasifikasi gambar menggunakan Convolutional Neural Network (CNN) untuk mengenali lima jenis bunga dari gambar: **daisy, dandelion, rose, sunflower**, dan **tulip**. Model ini dibangun dengan pendekatan deep learning menggunakan TensorFlow dan Keras, dan ditargetkan untuk dapat di-deploy ke berbagai platform seperti web, mobile, maupun server.
+## 📌 Deskripsi
+Proyek ini bertujuan untuk membangun model klasifikasi gambar yang dapat mengenali **12 jenis sampah** menggunakan pendekatan *deep learning* dan *transfer learning* (MobileNetV2). Model ditargetkan dapat digunakan pada berbagai platform seperti web, mobile, atau aplikasi berbasis server.
 
-## Dataset
-- Dataset berasal dari: [Kaggle Flowers Dataset by Imsparsh](https://www.kaggle.com/datasets/imsparsh/flowers-dataset)
-- Jumlah total gambar: ± 4000+  
-- Jumlah kelas: 5  
-- Dataset sudah disertakan di folder `flowers/` untuk memastikan notebook dapat berjalan tanpa koneksi ke Google Drive.
+## 📂 Dataset
+- Dataset: [Garbage Classification by MostafaAbla (Kaggle)](https://www.kaggle.com/datasets/mostafaabla/garbage-classification)
+- Jumlah kelas: **12**
+- Folder lokal yang digunakan: `garbage_split/` dengan subfolder `train/`, `val/`, dan `test/`
 
-## Arsitektur Model
-Model dibangun menggunakan arsitektur `Sequential` dengan layer:
-- `Conv2D` → untuk mengekstraksi fitur spasial
-- `MaxPooling2D` → untuk mengurangi dimensi dan overfitting
-- `Flatten` → untuk mengubah ke vektor
-- `Dense` + `Dropout` → untuk klasifikasi akhir
+Contoh label:
+- `battery`, `biological`, `cardboard`, `clothes`, `green-glass`, `metal`, `paper`, `plastic`, `shoes`, `trash`, `white-glass`, `brown-glass`
 
-Augmentasi digunakan untuk memperkaya data latih:
-- Random flip
-- Rotation
-- Zoom
+---
 
-Callback:
-- `EarlyStopping` untuk menghentikan training saat val_loss stagnan
-- `ModelCheckpoint` untuk menyimpan model terbaik
+## 🧠 Arsitektur Model
 
-## Target Akurasi
-Hasil training terakhir menunjukkan:
-- **Training Accuracy:** 84.57%
-- **Training Loss:** 0.4174
-- **Validation Accuracy:** 78.16%
-- **Validation Loss:** 0.6361
+Model menggunakan **MobileNetV2** sebagai backbone:
 
-## Format Model yang Disimpan
-| Format | Lokasi | Keterangan |
-|--------|--------|------------|
-| `.pb` (SavedModel) | `saved_model/` | Untuk deployment di server |
-| `.tflite` | `tflite/model.tflite` | Untuk mobile |
-| `.json + .bin` | `tfjs_model/` | Untuk browser (TensorFlow.js) |
+- `MobileNetV2 (include_top=False)`
+- `GlobalAveragePooling2D`
+- `Dropout(0.3)`
+- `Dense(num_classes, activation='softmax')`
+
+**Compiler:**
+- Optimizer: `Adam(learning_rate=0.0001)`
+- Loss: `categorical_crossentropy`
+- Metrics: `accuracy`
+
+**Callback:**
+- `EarlyStopping`
+- `ModelCheckpoint`
+
+---
+
+## 📊 Hasil Akurasi
+
+| Dataset      | Accuracy | Loss    |
+|--------------|----------|---------|
+| Training     | 96.55%   | 0.1146  |
+| Validation   | 95.53%   | 0.1358  |
+
+Contoh hasil:
+`Predicted class: plastic`
+
+## 💾 Format Model yang Disimpan
+
+| Format   | Lokasi           | Keterangan                           |
+|----------|------------------|--------------------------------------|
+| `.pb`    | `saved_model/`   | Format SavedModel untuk server       |
+| `.h5`    | `best_model.h5`  | Format Keras standar                 |
+| `.tflite`| `model.tflite`   | Untuk deployment ke Android          |
+| `tfjs`   | `tfjs_model/`    | Untuk deployment ke web (JS)         |
+
+---
 
 ## Inferensi
 Model diuji terhadap 1 gambar acak dari dataset test.  
 Contoh hasil prediksi: 
-![image](https://github.com/user-attachments/assets/9259ace6-3810-4fe2-99a4-7628769f11fc) 
-  `Predicted class: dandelion`
-
-## Dependensi
-tensorflow>=2.x matplotlib sklearn tensorflowjs
-Semua dependensi sudah dicantumkan dalam `requirements.txt`.
+![image](https://github.com/user-attachments/assets/f0bafa0a-f70a-419f-843d-0b72a6dcd814)
+`Predicted class: dandelion`
